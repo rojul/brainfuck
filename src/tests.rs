@@ -27,11 +27,17 @@ fn test_read() {
 #[test]
 #[should_panic(expected = "unclosed loop")]
 fn unclosed_loop() {
-    parse(b"[");
+    exec_helper(b"[", b"");
+}
+
+#[test]
+#[should_panic(expected = "unclosed loop")]
+fn unclosed_loop_nonzero() {
+    exec_helper(b"+[", b"");
 }
 
 #[test]
 #[should_panic(expected = "unexpected closing bracket")]
 fn unexpected_closing_bracket() {
-    parse(b"]");
+    exec_helper(b"]", b"");
 }

@@ -12,3 +12,7 @@ path = "src/main_jump.rs"
 [[bin]]
 name = "recursive"
 path = "src/main_recursive.rs"
+
+[[bin]]
+name = "without_parser"
+path = "src/main_without_parser.rs"

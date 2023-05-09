@@ -58,6 +58,7 @@ fn exec<R: Read, W: Write>(instructions: &[Instruction], reader: &mut R, writer:
     let mut pointer = tape.len() / 2;
     let mut pc = 0;
     while let Some(instruction) = instructions.get(pc) {
+        pc += 1;
         match instruction {
             Instruction::Plus => {
                 tape[pointer] = tape[pointer].wrapping_add(1);
@@ -74,12 +75,10 @@ fn exec<R: Read, W: Write>(instructions: &[Instruction], reader: &mut R, writer:
             Instruction::Loop { end } => {
                 if tape[pointer] == 0 {
                     pc = *end;
-                    continue;
                 }
             }
             Instruction::LoopEnd { start } => {
                 pc = *start;
-                continue;
             }
             Instruction::Read => {
                 tape[pointer] = utils::read(reader, writer);
@@ -88,6 +87,5 @@ fn exec<R: Read, W: Write>(instructions: &[Instruction], reader: &mut R, writer:
                 writer.write_all(&[tape[pointer]]).unwrap();
             }
         }
-        pc += 1;
     }
 }
